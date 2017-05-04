@@ -37,13 +37,14 @@ public class cregister extends HttpServlet {
            protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        try  {
             String cname=request.getParameter("cname");
             String textarea=request.getParameter("textarea");
-            String q="insert into complaints values(?,?,NOW())";
+            String q="insert into complaints (Complaint_Category,Description,cdate) " + "values(?,?,NOW())";
              PreparedStatement ps=  connfac.getCon().prepareStatement(q);
-              ps.setString(2, cname);
-              ps.setString(3, textarea);
+              ps.setString(1,cname);
+              ps.setString(2,textarea);
                int i= ps.executeUpdate();
             if(i>=1)
             {
